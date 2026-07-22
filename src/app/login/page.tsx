@@ -50,16 +50,9 @@ export default function LoginPage() {
             </div>
 
             <div>
-              <div className="flex items-center justify-between">
-                <label htmlFor="password" className="block text-sm font-medium text-slate-300">
-                  Password
-                </label>
-                <div className="text-sm">
-                  <a href="#" className="font-medium text-cyan-400 hover:text-cyan-300">
-                    Forgot password?
-                  </a>
-                </div>
-              </div>
+              <label htmlFor="password" className="block text-sm font-medium text-slate-300">
+                Password
+              </label>
               <div className="mt-2">
                 <input
                   id="password"
@@ -75,16 +68,21 @@ export default function LoginPage() {
               </div>
             </div>
 
-            <div className="flex items-center">
-              <input
-                id="remember-me"
-                name="remember-me"
-                type="checkbox"
-                className="h-4 w-4 rounded border-white/10 bg-slate-950/70 text-cyan-400 focus:ring-cyan-400 focus:ring-offset-slate-900"
-              />
-              <label htmlFor="remember-me" className="ml-2 block text-sm text-slate-300">
-                Remember me
-              </label>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                <input
+                  id="remember-me"
+                  name="remember-me"
+                  type="checkbox"
+                  className="h-4 w-4 rounded border-white/10 bg-slate-950/70 text-cyan-400 focus:ring-cyan-400 focus:ring-offset-slate-900"
+                />
+                <label htmlFor="remember-me" className="ml-2 block text-sm text-slate-300">
+                  Remember me
+                </label>
+              </div>
+              <a href="#" className="text-sm font-medium text-cyan-400 hover:text-cyan-300">
+                Forgot password?
+              </a>
             </div>
 
             <div>
