@@ -1,3 +1,6 @@
+"use client";
+
+import { use } from "react";
 import Link from "next/link";
 import { CheckCircle2, Circle, Clock, Phone, MessageSquare } from "lucide-react";
 
@@ -35,8 +38,8 @@ const ordersDB: Record<string, {
   },
 };
 
-export default async function OrderTrackPage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params;
+export default function OrderTrackPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params);
   const order = ordersDB[id];
 
   if (!order) {
