@@ -4,6 +4,23 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { User, Ruler, FileText, Download, Share2, Plus, X } from "lucide-react";
 
+interface MeasurementProfile {
+  id: string;
+  customer: string;
+  category: string;
+  lastUpdated: string;
+  measurements: {
+    bust?: string;
+    waist?: string;
+    hip?: string;
+    shoulder?: string;
+    gownLength?: string;
+    chest?: string;
+    trouserLength?: string;
+    sleeve?: string;
+  };
+}
+
 const initialMeasurements = [
   {
     id: "MES-001",
@@ -29,7 +46,7 @@ const initialMeasurements = [
 ];
 
 export default function MeasurementsPage() {
-  const [list, setList] = useState(initialMeasurements);
+  const [list, setList] = useState<MeasurementProfile[]>(initialMeasurements);
   const [activeIndex, setActiveIndex] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -55,7 +72,7 @@ export default function MeasurementsPage() {
     e.preventDefault();
     if (!customerName) return;
 
-    const newProfile = {
+    const newProfile: MeasurementProfile = {
       id: `MES-${Math.floor(100 + Math.random() * 900)}`,
       customer: customerName,
       category,
@@ -67,10 +84,11 @@ export default function MeasurementsPage() {
         shoulder: shoulder || "0",
         gownLength: length || "0",
       } : {
-        chest: bust || "0", // Map chest to bust input field
+        chest: bust || "0",
         waist: waist || "0",
         shoulder: shoulder || "0",
         trouserLength: length || "0",
+        sleeve: "0",
       }
     };
 
