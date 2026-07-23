@@ -1,50 +1,5 @@
 "use client";
 
-import Link from "next/link";
-import { User, Ruler, FileText, Download, Share2 } from "lucide-react";
-
-const measurements = [
-  {
-    id: "MES-001",
-    customer: "Ada Okafor",
-    category: "Female",
-    lastUpdated: "2 days ago",
-    measurements: {
-      bust: "38",
-      waist: "32",
-      hip: "42",
-      shoulder: "16",
-      gownLength: "60",
-    }
-  },
-  {
-    id: "MES-002",
-    customer: "Grace Adebayo",
-    category: "Female",
-    lastUpdated: "1 week ago",
-    measurements: {
-      bust: "36",
-      waist: "30",
-      hip: "40",
-      shoulder: "15",
-      gownLength: "58",
-    }
-  },
-  {
-    id: "MES-003",
-    customer: "Tolu Ade",
-    category: "Male",
-    lastUpdated: "3 weeks ago",
-    measurements: {
-      chest: "42",
-      waist: "36",
-      shoulder: "18",
-      trouserLength: "40",
-      sleeve: "25",
-    }
-  }
-];
-
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { User, Ruler, FileText, Download, Share2, Plus, X } from "lucide-react";
