@@ -66,11 +66,11 @@ export default function DashboardPage() {
 
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
           {stats.map((stat) => (
-            <div key={stat.label} className="rounded-2xl border border-white/10 bg-slate-900/70 p-5 shadow-lg shadow-black/20 backdrop-blur">
-              <p className="text-sm text-slate-400">{stat.label}</p>
+            <div key={stat.label} className="rounded-2xl border border-white/10 bg-slate-900/70 p-6 shadow-lg shadow-black/20 backdrop-blur">
+              <p className="text-base font-medium text-slate-350">{stat.label}</p>
               <div className="mt-3 flex items-end justify-between gap-2">
-                <p className="text-2xl font-semibold text-white">{stat.value}</p>
-                <span className="rounded-full bg-emerald-400/10 px-2.5 py-1 text-sm font-medium text-emerald-300">
+                <p className="text-3xl font-bold text-white">{stat.value}</p>
+                <span className="rounded-full bg-emerald-400/10 px-3 py-1 text-sm font-semibold text-emerald-300">
                   {stat.change}
                 </span>
               </div>
@@ -82,8 +82,8 @@ export default function DashboardPage() {
           <div className="rounded-[24px] border border-white/10 bg-slate-900/80 p-6 shadow-xl shadow-black/30">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-cyan-300">Production Workflow</p>
-                <h2 className="mt-1 text-xl font-semibold text-white">From order to delivery</h2>
+                <p className="text-sm font-semibold text-cyan-300">Production Workflow</p>
+                <h2 className="mt-1 text-2xl font-bold text-white">From order to delivery</h2>
               </div>
               <div className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-sm text-slate-300">
                 Live tracking
@@ -92,8 +92,8 @@ export default function DashboardPage() {
 
             <div className="mt-6 flex flex-wrap gap-3">
               {workflow.map((step, index) => (
-                <div key={step} className="flex items-center gap-3 rounded-full border border-cyan-400/20 bg-cyan-400/10 px-3 py-2 text-sm text-cyan-100">
-                  <span className="flex h-7 w-7 items-center justify-center rounded-full bg-cyan-400/20 text-xs font-semibold text-cyan-200">
+                <div key={step} className="flex items-center gap-3 rounded-full border border-cyan-400/20 bg-cyan-400/10 px-4 py-2.5 text-base font-semibold text-cyan-100">
+                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-cyan-400/20 text-sm font-bold text-cyan-200">
                     {index + 1}
                   </span>
                   {step}
@@ -101,16 +101,44 @@ export default function DashboardPage() {
               ))}
             </div>
           </div>
-
-          <div className="rounded-[24px] border border-white/10 bg-gradient-to-br from-cyan-500/20 via-slate-900/80 to-indigo-500/20 p-6 shadow-xl shadow-black/30">
-            <p className="text-sm text-cyan-300">Core Modules</p>
-            <div className="mt-4 space-y-3">
-              {modules.map((module) => (
-                <a key={module.title} href={module.href} className="flex items-center justify-between rounded-xl border border-white/10 bg-slate-950/60 px-4 py-3 transition hover:border-cyan-400/30 hover:bg-slate-900">
-                  <span className="text-sm font-medium text-slate-200">{module.title}</span>
-                  <span className="h-2.5 w-2.5 rounded-full bg-emerald-400" />
-                </a>
+          <div className="rounded-[24px] border border-white/10 bg-slate-900/80 p-6 shadow-xl shadow-black/30 flex flex-col justify-between">
+            <div>
+              <p className="text-sm font-semibold text-cyan-300">Revenue Analytics</p>
+              <h2 className="mt-1 text-2xl font-bold text-white">Monthly Trend</h2>
+            </div>
+            
+            {/* Visual Bar Chart */}
+            <div className="mt-6 flex items-end gap-3 h-28 px-2 border-b border-white/10">
+              {[
+                { label: "Feb", height: "h-[30%]" },
+                { label: "Mar", height: "h-[45%]" },
+                { label: "Apr", height: "h-[65%]" },
+                { label: "May", height: "h-[50%]" },
+                { label: "Jun", height: "h-[85%]" },
+                { label: "Jul", height: "h-[95%]" },
+              ].map(bar => (
+                <div key={bar.label} className="flex-1 flex flex-col items-center gap-1 group">
+                  <div className={`w-full rounded-t-lg bg-gradient-to-t from-indigo-500 to-cyan-400 ${bar.height} transition-all duration-300 group-hover:from-indigo-400 group-hover:to-cyan-300`} />
+                  <span className="text-[11px] text-slate-500 font-semibold">{bar.label}</span>
+                </div>
               ))}
+            </div>
+            
+            {/* Stage Allocation */}
+            <div className="mt-4 space-y-2">
+              <p className="text-xs font-semibold text-slate-400">Order Stage Breakdown</p>
+              <div className="flex gap-1 h-3 rounded-full overflow-hidden bg-slate-950">
+                <div className="bg-cyan-400 h-full w-[25%]" title="Received: 25%" />
+                <div className="bg-indigo-500 h-full w-[40%]" title="Sewing: 40%" />
+                <div className="bg-amber-400 h-full w-[15%]" title="QC: 15%" />
+                <div className="bg-emerald-400 h-full w-[20%]" title="Ready: 20%" />
+              </div>
+              <div className="flex flex-wrap gap-x-4 gap-y-1 text-[11px] text-slate-400 justify-between">
+                <span className="flex items-center gap-1"><span className="h-1.5 w-1.5 rounded-full bg-cyan-400" /> Received</span>
+                <span className="flex items-center gap-1"><span className="h-1.5 w-1.5 rounded-full bg-indigo-500" /> Sewing</span>
+                <span className="flex items-center gap-1"><span className="h-1.5 w-1.5 rounded-full bg-amber-400" /> QC</span>
+                <span className="flex items-center gap-1"><span className="h-1.5 w-1.5 rounded-full bg-emerald-400" /> Ready</span>
+              </div>
             </div>
           </div>
         </div>
@@ -119,24 +147,24 @@ export default function DashboardPage() {
           <div className="rounded-[24px] border border-white/10 bg-slate-900/80 p-6 shadow-xl shadow-black/30">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-cyan-300">Recent Orders</p>
-                <h2 className="mt-1 text-xl font-semibold text-white">Latest activity</h2>
+                <p className="text-sm font-semibold text-cyan-300">Recent Orders</p>
+                <h2 className="mt-1 text-2xl font-bold text-white">Latest activity</h2>
               </div>
-              <button className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-sm text-slate-300 hover:bg-white/10">
+              <button className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-sm font-semibold text-slate-300 hover:bg-white/10">
                 View all
               </button>
             </div>
 
             <div className="mt-5 space-y-3">
               {recentOrders.map((order) => (
-                <div key={order.id} className="flex items-center justify-between rounded-2xl border border-white/10 bg-slate-950/60 px-4 py-3">
+                <div key={order.id} className="flex items-center justify-between rounded-2xl border border-white/10 bg-slate-950/60 px-5 py-4">
                   <div>
-                    <p className="font-medium text-white">{order.customer}</p>
-                    <p className="text-sm text-slate-400">{order.id}</p>
+                    <p className="text-base font-bold text-white">{order.customer}</p>
+                    <p className="text-sm text-slate-400 mt-0.5">{order.id}</p>
                   </div>
                   <div className="text-right">
-                    <p className="text-sm text-cyan-200">{order.status}</p>
-                    <p className="text-sm text-slate-400">{order.date}</p>
+                    <p className="text-base font-semibold text-cyan-300">{order.status}</p>
+                    <p className="text-sm text-slate-400 mt-0.5">{order.date}</p>
                   </div>
                 </div>
               ))}
@@ -146,20 +174,20 @@ export default function DashboardPage() {
           <div className="rounded-[24px] border border-white/10 bg-slate-900/80 p-6 shadow-xl shadow-black/30">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-cyan-300">Upcoming Deliveries</p>
-                <h2 className="mt-1 text-xl font-semibold text-white">Today&apos;s schedule</h2>
+                <p className="text-sm font-semibold text-cyan-300">Upcoming Deliveries</p>
+                <h2 className="mt-1 text-2xl font-bold text-white">Today&apos;s schedule</h2>
               </div>
             </div>
 
             <div className="mt-5 space-y-3">
               {upcomingDeliveries.map((delivery) => (
-                <div key={delivery.customer} className="rounded-2xl border border-white/10 bg-gradient-to-r from-cyan-500/10 to-indigo-500/10 px-4 py-3">
+                <div key={delivery.customer} className="rounded-2xl border border-white/10 bg-gradient-to-r from-cyan-500/10 to-indigo-500/10 px-5 py-4">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="font-medium text-white">{delivery.customer}</p>
-                      <p className="text-sm text-slate-400">{delivery.outfit}</p>
+                      <p className="text-base font-bold text-white">{delivery.customer}</p>
+                      <p className="text-sm text-slate-400 mt-0.5">{delivery.outfit}</p>
                     </div>
-                    <span className="rounded-full bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">
+                    <span className="rounded-full bg-cyan-400/10 px-4 py-1.5 text-sm font-bold text-cyan-200">
                       {delivery.time}
                     </span>
                   </div>

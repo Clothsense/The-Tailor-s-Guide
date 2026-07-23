@@ -16,6 +16,10 @@ const stages = ["Order Received", "Measurement Taken", "Cutting", "Sewing", "Qua
 
 export default function OrdersPage() {
   const [orders, setOrders] = useState(initialOrders);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [newCustomer, setNewCustomer] = useState("");
+  const [newStyle, setNewStyle] = useState("");
+  const [newAmount, setNewAmount] = useState("");
 
   useEffect(() => {
     const saved = localStorage.getItem("tailoring_orders");
@@ -45,8 +49,64 @@ export default function OrdersPage() {
     saveOrders(updated);
   };
 
+  const handleCreateOrder = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newCustomer || !newStyle || !newAmount) return;
+
+    const newOrder = {
+      id: `ORD-${Math.floor(1000 + Math.random() * 9000)}`,
+      customer: newCustomer,
+      style: newStyle,
+      stage: "Order Received",
+      amount: newAmount.startsWith("₦") ? newAmount : `₦${newAmount}`,
+    };
+
+    const updated = [newOrder, ...orders];
+    saveOrders(updated);
+
+    // Reset fields
+    setNewCustomer("");
+    setNewStyle("");
+    setNewAmount("");
+    setIsModalOpen(false);
+  };
+
   return (
     <main className="min-h-screen bg-[radial-gradient(circle_at_top_left,_rgba(34,211,238,0.12),_transparent_30%),linear-gradient(135deg,_#020617_0%,_#0f172a_50%,_#111827_100%)] px-4 py-8 text-slate-100 sm:px-6 lg:px-8">
+      
+      {/* Modal */}
+      {isModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm">
+          <div className="w-full max-w-md rounded-[24px] border border-white/10 bg-slate-900 p-6 shadow-2xl">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-xl font-semibold text-white">Create New Order</h3>
+              <button onClick={() => setIsModalOpen(false)} className="text-slate-400 hover:text-white">
+                <Plus className="h-5 w-5 rotate-45" />
+              </button>
+            </div>
+            
+            <form onSubmit={handleCreateOrder} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-slate-300">Customer Name</label>
+                <input required value={newCustomer} onChange={(e) => setNewCustomer(e.target.value)} type="text" className="mt-1 w-full rounded-xl border border-white/10 bg-slate-950/70 px-4 py-2.5 text-white focus:border-cyan-400 focus:outline-none" placeholder="Ada Okafor" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-slate-300">Outfit Style</label>
+                <input required value={newStyle} onChange={(e) => setNewStyle(e.target.value)} type="text" className="mt-1 w-full rounded-xl border border-white/10 bg-slate-950/70 px-4 py-2.5 text-white focus:border-cyan-400 focus:outline-none" placeholder="Ankara Gown" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-slate-300">Amount (Cost)</label>
+                <input required value={newAmount} onChange={(e) => setNewAmount(e.target.value)} type="text" className="mt-1 w-full rounded-xl border border-white/10 bg-slate-950/70 px-4 py-2.5 text-white focus:border-cyan-400 focus:outline-none" placeholder="₦150,000" />
+              </div>
+              
+              <button type="submit" className="mt-6 w-full rounded-xl bg-cyan-400 py-3 font-semibold text-slate-950 transition hover:bg-cyan-300">
+                Create Order
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
+
       <section className="mx-auto flex max-w-[1400px] flex-col gap-6">
         <div className="rounded-[28px] border border-white/10 bg-slate-900/80 p-6 shadow-2xl shadow-black/30 backdrop-blur">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
@@ -65,7 +125,7 @@ export default function OrdersPage() {
               <button className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-300 transition hover:bg-white/10">
                 <ListFilter className="h-4 w-4" />
               </button>
-              <button className="flex items-center gap-2 rounded-full bg-cyan-400 px-6 py-2.5 text-sm font-medium text-slate-950 transition hover:bg-cyan-300">
+              <button onClick={() => setIsModalOpen(true)} className="flex items-center gap-2 rounded-full bg-cyan-400 px-6 py-2.5 text-sm font-medium text-slate-950 transition hover:bg-cyan-300">
                 <Plus className="h-4 w-4" />
                 New Order
               </button>
